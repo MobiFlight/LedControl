@@ -85,14 +85,14 @@ void LedControl::shutdown(int addr, bool b) {
 void LedControl::setScanLimit(int addr, int limit) {
     if(addr<0 || addr>=maxDevices)
         return;
-    if(limit>=0 || limit<8)
+    if(limit>=0 && limit<8)
         spiTransfer(addr, OP_SCANLIMIT,limit);
 }
 
 void LedControl::setIntensity(int addr, int intensity) {
     if(addr<0 || addr>=maxDevices)
         return;
-    if(intensity>=0 || intensity<16)	
+    if(intensity>=0 && intensity<16)	
         spiTransfer(addr, OP_INTENSITY,intensity);
 }
 
@@ -189,7 +189,7 @@ void LedControl::setChar(int addr, int digit, char value, boolean dp) {
     index=(byte)value;
     if(index >127) {
         //nothing define we use the space char
-	    value=32;
+	    index=32;
     }
     v=pgm_read_byte_near(charTable + index); 
     if(dp)
